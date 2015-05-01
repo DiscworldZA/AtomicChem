@@ -1,10 +1,10 @@
 package chase.mods.ac.tileentity;
 
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.FluidRegistry.FluidRegisterEvent;
 import chase.mods.ac.helpers.BlockHelper;
 import chase.mods.ac.references.Names;
 
@@ -79,6 +80,17 @@ public class TELiquidIO extends TEBlockAMInventory implements IFluidHandler
 						this.setInventorySlotContents(1, new ItemStack(Items.bucket));
 					}
 				}
+				else if (FluidContainerRegistry.isEmptyContainer(item) && internalTank.getFluidAmount() > 0)
+				{
+					FluidStack drained = this.internalTank.drain(FluidContainerRegistry.getContainerCapacity(internalTank.getFluid(), item), false);
+					if (drained.amount == FluidContainerRegistry.getContainerCapacity(internalTank.getFluid(), item))
+					{
+						ItemStack filledItem = FluidContainerRegistry.fillFluidContainer(this.internalTank.getFluid(), item);
+						this.internalTank.drain(FluidContainerRegistry.getContainerCapacity(internalTank.getFluid(), item), true);
+						this.setInventorySlotContents(1, filledItem);
+						this.setInventorySlotContents(0, null);
+					}
+				}
 			}
 		}
 	}
@@ -86,10 +98,9 @@ public class TELiquidIO extends TEBlockAMInventory implements IFluidHandler
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
 	{
-		System.out.println("FIRED!!");
 		if (index == 0 && stack != null)
 		{
-			if (FluidContainerRegistry.isBucket(stack) && FluidContainerRegistry.isFilledContainer(stack))
+			if (FluidContainerRegistry.isBucket(stack) || FluidContainerRegistry.isFilledContainer(stack))
 			{
 				return true;
 			}
@@ -101,9 +112,9 @@ public class TELiquidIO extends TEBlockAMInventory implements IFluidHandler
 	{
 		int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
 		ForgeDirection facingDir = BlockHelper.getOrientation(meta);
-		int x = this.xCoord + facingDir.getOpposite().offsetX;
-		int y = this.yCoord + facingDir.getOpposite().offsetY;
-		int z = this.zCoord + facingDir.getOpposite().offsetZ;
+		int x = this.xCoord + facingDir.offsetX;
+		int y = this.yCoord + facingDir.offsetY;
+		int z = this.zCoord + facingDir.offsetZ;
 		TileEntity tile = this.worldObj.getTileEntity(x, y, z);
 		if (tile != null && tile instanceof IFluidHandler && !(tile instanceof TELiquidIO))
 		{
@@ -137,7 +148,7 @@ public class TELiquidIO extends TEBlockAMInventory implements IFluidHandler
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
 	{
 		int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
-		ForgeDirection facingDir = BlockHelper.getOrientation(meta);
+		ForgeDirection facingDir = BlockHelper.getOrientation(meta).getOpposite();
 		if (facingDir == from)
 		{
 			if (resource != null)
@@ -153,7 +164,7 @@ public class TELiquidIO extends TEBlockAMInventory implements IFluidHandler
 	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
 	{
 		int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
-		ForgeDirection facingDir = BlockHelper.getOrientation(meta);
+		ForgeDirection facingDir = BlockHelper.getOrientation(meta).getOpposite();
 		if (facingDir.getOpposite() == from || facingDir == from)
 		{
 			if (resource != null)
@@ -180,7 +191,7 @@ public class TELiquidIO extends TEBlockAMInventory implements IFluidHandler
 	public boolean canFill(ForgeDirection from, Fluid fluid)
 	{
 		int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
-		ForgeDirection facingDir = BlockHelper.getOrientation(meta);
+		ForgeDirection facingDir = ForgeDirection.UP;
 		if (facingDir == from)
 		{
 			if (internalTank.getFluid() == null || internalTank.getFluid().getFluid() == null)

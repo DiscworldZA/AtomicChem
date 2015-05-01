@@ -52,6 +52,10 @@ public class TEItemIO extends TEBlockAMInventory implements ISidedInventory
 							{
 								int maxStackSize = stackInChest.getMaxStackSize();
 								int stackSizeInChest = stackInChest.stackSize;
+								if(stackSizeInChest == maxStackSize)
+								{
+									continue;
+								}
 								int stackSizeToPlace = stackToPlace.stackSize;
 								int stackLeft = (stackSizeInChest + stackSizeToPlace) > maxStackSize ? (stackSizeInChest + stackSizeToPlace - maxStackSize) : maxStackSize
 								        - (stackSizeInChest + stackSizeToPlace);
@@ -143,10 +147,7 @@ public class TEItemIO extends TEBlockAMInventory implements ISidedInventory
 		ForgeDirection facingDir = BlockHelper.getOrientation(meta);
 		if (facingDir.ordinal() == side || facingDir.getOpposite().ordinal() == side)
 		{
-			if (this.getStackInSlot(slotIndex).isItemEqual(stack))
-			{
-				return true;
-			}
+			//TODO Write Scanning and Retrieving from ISidedInventories
 		}
 		return false;
 	}

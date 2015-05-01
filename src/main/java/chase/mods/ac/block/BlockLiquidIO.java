@@ -1,5 +1,6 @@
 package chase.mods.ac.block;
 
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,9 +40,17 @@ public class BlockLiquidIO extends BlockAC implements ITileEntityProvider
 		return new TELiquidIO();
 	}
 	
-	public void onBlockDestroyedByExplosion(World p_149723_1_, int p_149723_2_, int p_149723_3_, int p_149723_4_, Explosion p_149723_5_)
+	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion p_149723_5_)
 	{
-		//TODO Implement liquid Drop
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if (tile != null && tile instanceof TELiquidIO)
+		{
+			TELiquidIO lIO = (TELiquidIO) tile;
+			if (lIO.getInternalTank().getCapacity() > 0 && lIO.getInternalTank().getFluid().getFluid().getBlock() != null)
+			{
+				world.setBlock(x, y, z, lIO.getInternalTank().getFluid().getFluid().getBlock());
+			}
+		}
 	}
 	
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
@@ -66,7 +75,7 @@ public class BlockLiquidIO extends BlockAC implements ITileEntityProvider
 					FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(item);
 					if (lIO.canFill(ForgeDirection.UP, fluid.getFluid()))
 					{
-						lIO.fill(ForgeDirection.UP, fluid, true);
+						lIO.fill(BlockHelper.getOrientation(lIO.blockMetadata).getOpposite(), fluid, true);
 						FluidContainerRegistry.drainFluidContainer(player.getHeldItem());
 						if (!player.capabilities.isCreativeMode)
 						{
@@ -85,7 +94,7 @@ public class BlockLiquidIO extends BlockAC implements ITileEntityProvider
 		}
 		else
 		{
-			player.openGui(AtomicChem.instance, GUIs.ID.LiquidIO.ordinal(), world, x, y, z);
+			//player.openGui(AtomicChem.instance, GUIs.ID.LiquidIO.ordinal(), world, x, y, z);
 		}
 		return false;
 	}

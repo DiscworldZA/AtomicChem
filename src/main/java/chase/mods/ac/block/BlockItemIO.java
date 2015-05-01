@@ -66,11 +66,11 @@ public class BlockItemIO extends BlockAC implements ITileEntityProvider
 		ForgeDirection facingDir = BlockHelper.getOrientation(meta);
 		if (side == facingDir.ordinal())
 		{
-			return this.iconInput;
+			return this.iconOutput;
 		}
 		if (side == facingDir.getOpposite().ordinal())
 		{
-			return this.iconOutput;
+			return this.iconInput;
 		}
 		return this.iconSide;
 	}
