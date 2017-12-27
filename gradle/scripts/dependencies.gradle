@@ -1,0 +1,47 @@
+repositories {
+    mavenLocal()
+    mavenCentral()
+
+    maven {
+        name "FireBall API Depot"
+        url "http://dl.tsr.me/artifactory/libs-release/"
+    }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "modmaven.k-4u.nl"
+    }
+    maven {
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+}
+configurations {
+    mods
+}
+
+task installMods(type: Copy, dependsOn: "deinstallMods") {
+    from { configurations.mods }
+    include "**/*.jar"
+    into file(minecraft.runDir + "/mods")
+}
+
+task deinstallMods(type: Delete) {
+    delete fileTree(dir: minecraft.runDir + "/mods", include: "*.jar")
+}
+
+tasks.setupDecompWorkspace.dependsOn installMods
+tasks.setupDevWorkspace.dependsOn installMods
+
+dependencies {
+    deobfProvided "mezz.jei:jei_1.12.2:4.8.5.132:api"
+    runtime "mezz.jei:jei_1.12.2:4.8.5.132"
+    mods "ftb-utilities:FTBUtilities:4.2.4"
+    mods "ftblib:FTBLib:4.2.5"
+    mods "com.fireball1725.devworld:devworld:1.12-b18-client"
+    mods "cpw.mods:ironchest:1.12.2-7.0.34.820"
+}

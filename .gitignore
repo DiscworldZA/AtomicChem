@@ -18,7 +18,6 @@ build
 .gradle
 gradlew
 *.bat
-gradle/
 gradle.properties
 
 # other
