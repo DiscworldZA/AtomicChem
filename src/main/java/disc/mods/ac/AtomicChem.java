@@ -1,5 +1,6 @@
 package disc.mods.ac;
 
+import disc.mods.ac.init.Blocks;
 import disc.mods.ac.proxy.IProxy;
 import disc.mods.ac.ref.References;
 import disc.mods.core.DiscMod;
@@ -13,7 +14,7 @@ public class AtomicChem extends DiscMod {
 
 	@Instance(References.Mod.Id)
 	public static AtomicChem instance;
-	
+
 	@SidedProxy(clientSide = References.Proxy.Client, serverSide = References.Proxy.Server)
 	public static IProxy proxy;
 
@@ -25,6 +26,11 @@ public class AtomicChem extends DiscMod {
 	@Override
 	public IProxyBase proxy() {
 		return proxy;
+	}
+
+	@Override
+	public Class getBlockEnum() {
+		return Blocks.class;
 	}
 
 }

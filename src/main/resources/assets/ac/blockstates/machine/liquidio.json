@@ -1,0 +1,45 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "up": "ac:blocks/machine/machine_liquidio_top",
+            "down": "ac:blocks/machine/machine_bottom",
+            "north": "ac:blocks/machine/machine_input",
+            "east": "ac:blocks/machine/machine_side",
+            "west": "ac:blocks/machine/machine_side",
+            "south": "ac:blocks/machine/machine_output",
+            "particle": "ac:blocks/machine/machine_side"
+        },
+        "model": "minecraft:cube",
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "inventory": [
+            {
+            }
+        ],
+        "facing": {
+            "west": {
+                "y": -90
+            },
+            "east": {
+                "y": 90
+            },
+            "north": {
+            },
+            "south": {
+                "y": 180
+            },
+            "up": {
+                "x": -90
+            },
+            "down": {
+                "x": 90
+            }
+        },
+        "normal": [
+            {
+            }
+        ]
+    }
+}
