@@ -2,13 +2,13 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "up": "ac:blocks/machine/machine_itemio_top",
-            "down": "ac:blocks/machine/machine_bottom",
-            "north": "ac:blocks/machine/machine_input",
-            "east": "ac:blocks/machine/machine_side",
-            "west": "ac:blocks/machine/machine_side",
-            "south": "ac:blocks/machine/machine_output",
-            "particle": "ac:blocks/machine/machine_side"
+            "up": "ac:blocks/machine/machine_glass",
+            "down": "ac:blocks/machine/machine_glass",
+            "north": "ac:blocks/machine/machine_glass",
+            "east": "ac:blocks/machine/machine_glass",
+            "west": "ac:blocks/machine/machine_glass",
+            "south": "ac:blocks/machine/machine_glass",
+            "particle": "ac:blocks/machine/machine_glass"
         },
         "model": "minecraft:cube",
         "transform": "forge:default-block"
@@ -29,12 +29,6 @@
             },
             "south": {
                 "y": 180
-            },
-            "up": {
-                "x": -90
-            },
-            "down": {
-                "x": 90
             }
         },
         "normal": [

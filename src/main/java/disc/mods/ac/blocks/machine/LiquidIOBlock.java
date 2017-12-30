@@ -1,18 +1,18 @@
 package disc.mods.ac.blocks.machine;
 
+import disc.mods.ac.creativetab.Tabs;
+import disc.mods.ac.tile.machine.TileEntityLiquidIO;
+import disc.mods.core.block.CoreTileEntityBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class LiquidIOBlock extends MachineBlock {
+public class LiquidIOBlock extends CoreTileEntityBlock {
 
 	public LiquidIOBlock() {
 		super("liquidio", "machine/liquidio");
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
-		return null;
+		this.setTileEntity(TileEntityLiquidIO.class);
+		this.setCreativeTab(Tabs.BlockTab);
 	}
 
 	@Override
