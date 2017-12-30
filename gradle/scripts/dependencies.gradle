@@ -19,6 +19,15 @@ repositories {
     maven {
         url = "https://minecraft.curseforge.com/api/maven/"
     }
+    
+    maven {
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
+    }
+    maven {
+        name = "ChickenBones Maven"
+        url = "http://chickenbones.net/maven/"
+    }
 }
 configurations {
     mods
@@ -38,10 +47,13 @@ tasks.setupDecompWorkspace.dependsOn installMods
 tasks.setupDevWorkspace.dependsOn installMods
 
 dependencies {
-    deobfProvided "mezz.jei:jei_1.12.2:4.8.5.132:api"
-    runtime "mezz.jei:jei_1.12.2:4.8.5.132"
     mods "ftb-utilities:FTBUtilities:4.2.4"
     mods "ftblib:FTBLib:4.2.5"
     mods "com.fireball1725.devworld:devworld:1.12-b18-client"
     mods "cpw.mods:ironchest:1.12.2-7.0.34.820"
+    mods "codechicken:CodeChickenLib:1.12-3.1.3.+:deobf"
+    mods "cofh:CoFHCore:1.12-4.3.6.+:deobf"
+    mods "cofh:RedstoneFlux:1.12-2.0.1.+:deobf"
+    mods "cofh:ThermalFoundation:1.12-2.3.6.+:deobf"
+    mods "cofh:ThermalExpansion:1.12-5.3.6.+:deobf"
 }
