@@ -1,9 +1,6 @@
 package disc.mods.ac.init;
 
-import disc.mods.ac.blocks.machine.ItemIOBlock;
-import disc.mods.ac.blocks.machine.LiquidIOBlock;
-import disc.mods.ac.blocks.machine.MachineCasing;
-import disc.mods.ac.blocks.machine.MachineGlassCasing;
+import disc.mods.ac.blocks.machine.*;
 import disc.mods.core.block.CoreBlock;
 import disc.mods.core.init.IDiscBlocks;
 import net.minecraft.block.Block;
@@ -11,7 +8,7 @@ import net.minecraft.item.ItemBlock;
 
 public enum Blocks implements IDiscBlocks {
 	ItemIO(ItemIOBlock.class), LiquidIO(LiquidIOBlock.class), Casing(MachineCasing.class), GlassCasing(
-			MachineGlassCasing.class);
+			MachineGlassCasing.class), PowerCore(PowerCoreBlock.class);
 
 	private final Class<? extends CoreBlock> blockClass;
 	private final Class<? extends ItemBlock> itemBlockClass;

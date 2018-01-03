@@ -56,4 +56,5 @@ dependencies {
     mods "cofh:RedstoneFlux:1.12-2.0.1.+:deobf"
     mods "cofh:ThermalFoundation:1.12-2.3.6.+:deobf"
     mods "cofh:ThermalExpansion:1.12-5.3.6.+:deobf"
+    mods "cofh:ThermalDynamics:1.12-2.3.6.13:deobf"
 }
